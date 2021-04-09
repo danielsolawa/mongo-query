@@ -1,7 +1,7 @@
 package com.danielsolawa.mongoquery.repository;
 
 
-import com.danielsolawa.mongoquery.specification.MongoSpecification;
+import com.danielsolawa.mongoquery.specification.MSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoRepositoryBean
 public interface MongoQueryRepository <T, ID> extends MongoRepository<T, ID> {
 
-    List<T> findAll(MongoSpecification specification);
+    List<T> findAll(MSpecification specification);
 
-    Page<T> findAll(MongoSpecification specification, Pageable pageable);
+    Page<T> findAll(MSpecification specification, Pageable pageable);
 }

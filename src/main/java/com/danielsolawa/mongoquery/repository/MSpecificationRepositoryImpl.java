@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.repository.support.SimpleMongoRepository
 import java.util.List;
 import java.util.Optional;
 
-public class MongoQueryRepositoryImpl<T, ID> extends SimpleMongoRepository<T, ID> implements MongoQueryRepository<T, ID> {
+public class MSpecificationRepositoryImpl<T, ID> extends SimpleMongoRepository<T, ID> implements MSpecificationRepository<T, ID> {
 
     private final MongoOperations mongoOperations;
 
@@ -24,7 +24,7 @@ public class MongoQueryRepositoryImpl<T, ID> extends SimpleMongoRepository<T, ID
      * @param metadata        must not be {@literal null}.
      * @param mongoOperations must not be {@literal null}.
      */
-    public MongoQueryRepositoryImpl(MongoEntityInformation<T, ID> metadata, MongoOperations mongoOperations) {
+    public MSpecificationRepositoryImpl(MongoEntityInformation<T, ID> metadata, MongoOperations mongoOperations) {
         super(metadata, mongoOperations);
         this.mongoOperations = mongoOperations;
     }

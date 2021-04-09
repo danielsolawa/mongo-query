@@ -1,7 +1,7 @@
 package com.danielsolawa.mongoquery.util;
 
-public interface MongoSpecificationUtil {
+public interface MCriteria {
 
-    MongoSpecificationBuilder execute(MongoSpecificationBuilder specBuilder);
+    MCriteriaBuilder execute(MCriteriaBuilder cb);
 
 }

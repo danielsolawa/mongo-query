@@ -12,12 +12,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class MongoQuery {
+public abstract class MSpecification<T> {
 
 
     private static final String VALUE_SEPARATOR = ";";
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 100;
+
+    private Class<T> typeClass;
+
+    public MSpecification(Class<T> typeClass) {
+        this.typeClass = typeClass;
+    }
+
 
 
     @Min(0L)
@@ -34,7 +41,9 @@ public abstract class MongoQuery {
     public abstract MCriteria buildCriteria();
 
     @JsonIgnore
-    public abstract Class<?> getTypeClass();
+    public Class<?> getTypeClass(){
+        return this.typeClass;
+    }
 
 
     @JsonIgnore
@@ -43,13 +52,13 @@ public abstract class MongoQuery {
     }
 
     public Sort getSort(List<String> sortByStringList) {
-        return (Sort) Optional.ofNullable(sortByStringList).map((sbs) -> {
-            return Sort.by(this.createOrders(sbs));
-        }).orElseGet(Sort::unsorted);
+        return Optional.ofNullable(sortByStringList).map((sbs) ->
+             Sort.by(this.createOrders(sbs))
+        ).orElseGet(Sort::unsorted);
     }
 
     private List<Sort.Order> createOrders(List<String> sortByStringList) {
-        return (List)sortByStringList.stream().map(this::createOrder).collect(Collectors.toList());
+        return sortByStringList.stream().map(this::createOrder).collect(Collectors.toList());
     }
 
     private Sort.Order createOrder(String sortByString) {
@@ -64,7 +73,7 @@ public abstract class MongoQuery {
     }
 
     public Integer getPageNumber() {
-        return (Integer)Optional.ofNullable(this.pageNumber).orElse(DEFAULT_PAGE_NUMBER);
+        return Optional.ofNullable(this.pageNumber).orElse(DEFAULT_PAGE_NUMBER);
     }
 
     public void setPageNumber(Integer pageNumber) {
@@ -72,7 +81,7 @@ public abstract class MongoQuery {
     }
 
     public Integer getPageSize() {
-        return (Integer)Optional.ofNullable(this.pageSize).orElse(DEFAULT_PAGE_SIZE);
+        return Optional.ofNullable(this.pageSize).orElse(DEFAULT_PAGE_SIZE);
     }
 
     public void setPageSize(Integer pageSize) {

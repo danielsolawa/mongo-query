@@ -3,26 +3,26 @@ package com.danielsolawa.mongoquery.util;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-public class MongoSpecificationBuilder {
+public class MCriteriaBuilder {
 
     private Query query;
 
-    public static MongoSpecificationBuilder getInstance(){
-        return new MongoSpecificationBuilder();
+    public static MCriteriaBuilder getInstance(){
+        return new MCriteriaBuilder();
     }
 
-    private MongoSpecificationBuilder(){
+    private MCriteriaBuilder(){
         this.query = new Query();
     }
 
-    public MongoSpecificationBuilder append(Criteria criteria){
+    public MCriteriaBuilder append(Criteria criteria){
         query.addCriteria(criteria);
 
         return this;
     }
 
     public Query getQuery(){
-        return this.query;
+        return query;
     }
 
 

@@ -1,14 +1,13 @@
 package com.danielsolawa.mongoquery;
 
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+//@EnableMongoRepositories(
+//        repositoryBaseClass = MongoQueryRepositoryImpl.class)
+//@SpringBootApplication
+public class MongoQueryApplication {
 
-@SpringBootApplication
-public class MongoQuery {
-
-    public static void main(String[] args){
-        SpringApplication.run(MongoQuery.class, args);
-    }
+//    public static void main(String[] args){
+//        SpringApplication.run(MongoQueryApplication.class, args);
+//    }
 
 }

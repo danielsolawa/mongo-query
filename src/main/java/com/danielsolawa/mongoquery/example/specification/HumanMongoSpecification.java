@@ -1,19 +1,22 @@
 package com.danielsolawa.mongoquery.example.specification;
 
 import com.danielsolawa.mongoquery.example.model.Human;
-import com.danielsolawa.mongoquery.specification.MongoSpecification;
+import com.danielsolawa.mongoquery.specification.MSpecification;
+import com.danielsolawa.mongoquery.util.MCriteria;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
-public class HumanMongoSpecification extends MongoSpecification {
+public class HumanMongoSpecification extends MSpecification<Human> {
 
-    @Override
-    public Query getQuery() {
-        return new Query().addCriteria(Criteria.where("name").in("Daniel", "Adam"));
+    public HumanMongoSpecification() {
+        super(Human.class);
     }
 
     @Override
-    public Class<?> getTypeClass() {
-        return Human.class;
+    public MCriteria buildCriteria() {
+        return cb -> cb
+                .append(Criteria.where("name").in("tomek", "Daniel"))
+                .append(Criteria.where("dogList.name").in("ace"));
     }
+
+
 }

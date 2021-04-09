@@ -10,7 +10,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.util.List;
 
 @NoRepositoryBean
-public interface MongoQueryRepository <T, ID> extends MongoRepository<T, ID> {
+public interface MSpecificationRepository<T, ID> extends MongoRepository<T, ID> {
 
     List<T> findAll(MSpecification specification);
 

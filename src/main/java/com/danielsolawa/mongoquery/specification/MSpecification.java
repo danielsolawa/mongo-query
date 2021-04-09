@@ -1,10 +1,10 @@
 package com.danielsolawa.mongoquery.specification;
 
+import com.danielsolawa.mongoquery.util.MCriteria;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Min;
@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class MongoSpecification {
+public abstract class MongoQuery {
 
 
     private static final String VALUE_SEPARATOR = ";";
     private static final Integer DEFAULT_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 100;
+
+
     @Min(0L)
     @Nullable
     private Integer pageNumber;
@@ -29,13 +31,11 @@ public abstract class MongoSpecification {
 
     @Nullable
     @JsonIgnore
-    public abstract Query getQuery();
+    public abstract MCriteria buildCriteria();
 
     @JsonIgnore
     public abstract Class<?> getTypeClass();
 
-    public MongoSpecification() {
-    }
 
     @JsonIgnore
     public Pageable getPageRequest() {

@@ -26,7 +26,6 @@ public abstract class MSpecification<T> {
     }
 
 
-
     @Min(0L)
     @Nullable
     private Integer pageNumber;

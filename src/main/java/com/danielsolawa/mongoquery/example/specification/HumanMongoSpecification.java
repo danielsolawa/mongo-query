@@ -6,12 +6,11 @@ import com.danielsolawa.mongoquery.util.MCriteria;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.List;
-import java.util.Optional;
 
 public class HumanMongoSpecification extends MSpecification<Human> {
 
-    private List<String> name = null;
-    private List<String> dogName = List.of("ace");
+    private List<String> name = List.of("Adam", "Daniel");
+    private List<String> dogName = List.of("ramzes", "ace");
 
 
     public HumanMongoSpecification() {
@@ -21,8 +20,7 @@ public class HumanMongoSpecification extends MSpecification<Human> {
     @Override
     public MCriteria buildCriteria() {
         return cb -> cb
-                .append(Optional.ofNullable(name).map(f -> Criteria.where("name").in(f)))
-                .append(Optional.ofNullable(dogName).map(f -> Criteria.where("dogList.name").in(f)));
+                .append(Criteria.where("name").in(name));
     }
 
     public List<String> getName() {

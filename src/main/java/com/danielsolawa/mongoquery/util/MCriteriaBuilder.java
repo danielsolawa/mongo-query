@@ -13,7 +13,7 @@ public class MCriteriaBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(MCriteriaBuilder.class.getName());
 
     private Query query;
-    private final Map<Integer, Queue<Criteria>> criteriaMap = new HashMap<>();
+    private final Map<Integer, List<Criteria>> criteriaMap = new HashMap<>();
 
     public static MCriteriaBuilder getInstance() {
         return new MCriteriaBuilder();
@@ -25,17 +25,15 @@ public class MCriteriaBuilder {
     }
 
     public MCriteriaBuilder append(Optional<Criteria> optionalCriteria) {
-        optionalCriteria.ifPresent(criteria -> query.addCriteria(criteria));
+        optionalCriteria.ifPresent(criteria -> addToCurrentCriteria(criteria));
 
         return this;
     }
 
     public MCriteriaBuilder append(Criteria criteria) {
         if (isFilterNonNull.apply(criteria)) {
-//            addToCurrentCriteria(criteria);
-            query.addCriteria(criteria);
+            addToCurrentCriteria(criteria);
         }
-
 
         return this;
     }
@@ -46,48 +44,22 @@ public class MCriteriaBuilder {
         return this;
     }
 
-
+    @Deprecated
     public Query getQuery() {
         return query;
     }
 
     public Query buildQuery() {
-        Criteria criteria = null;
-        LOGGER.info("[{}]", criteriaMap.get(getLastElement()).size());
+        List<Criteria> criteriaResult = new ArrayList<>();
 
-        for (Map.Entry<Integer, Queue<Criteria>> entry : criteriaMap.entrySet()) {
-            final Integer key = entry.getKey();
-            final Queue<Criteria> criteriaQueue = criteriaMap.get(key);
+        criteriaMap.entrySet().forEach(entry ->
+                criteriaResult.add(new Criteria().andOperator(entry.getValue().toArray(new Criteria[0])))
+        );
 
-            if (key == 0) {
-                LOGGER.info("[key 0]");
-                while (!criteriaQueue.isEmpty()) {
-                    if (criteria == null) {
-                        criteria = new Criteria();
-                    } else {
-                        criteria.andOperator(criteriaQueue.poll());
-                    }
-                }
-            } else {
-                LOGGER.info("[key {}]", key);
-                LOGGER.info("[size {}]", criteriaMap.get(key).size());
-                Criteria tmp = null;
-                while (!criteriaQueue.isEmpty()) {
-                    if (tmp == null) {
-                        tmp = new Criteria();
-                    } else {
-                        tmp.andOperator(criteriaQueue.poll());
-                    }
-                }
+        Criteria criteria = new Criteria().orOperator(criteriaResult.toArray(new Criteria[0]));
+        query.addCriteria(criteria);
 
-                if (tmp != null) {
-                    LOGGER.info("adding or  operator");
-                    criteria.orOperator(tmp);
-                }
-            }
-        }
-
-        return Objects.nonNull(criteria) ? query.addCriteria(criteria) : query;
+        return query;
     }
 
 
@@ -100,14 +72,13 @@ public class MCriteriaBuilder {
                     .orElse(false);
 
     private void addToCurrentCriteria(Criteria criteria) {
-        Queue<Criteria> currentCriteria = getCurrentCriteria();
+        List<Criteria> currentCriteria = getCurrentCriteria();
         currentCriteria.add(criteria);
 
-        LOGGER.info("[add to current {}]", criteria == null);
         criteriaMap.put(getLastElement(), currentCriteria);
     }
 
-    private Queue<Criteria> getCurrentCriteria() {
+    private List<Criteria> getCurrentCriteria() {
 
         return criteriaMap.get(getLastElement());
     }

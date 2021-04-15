@@ -21,7 +21,10 @@ repositories {
 }
 
 dependencies {
-//    implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: '3.1.7'
+//    implementation (group: 'org.springframework.data', name: 'spring-data-mongodb', version: '3.1.7'){
+//        exclude module: 'slf4j-api'
+//        exclude module: 'logback-classic'
+//    }
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.2'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'

@@ -43,13 +43,17 @@ public class MSpecificationRepositoryImpl<T, ID> extends SimpleMongoRepository<T
         final Query query = getQuery(specification);
         query.with(pageable);
 
-        return new PageImpl<>((List<T>) mongoOperations.find(query, specification.getTypeClass()), pageable, count());
+        return new PageImpl<>(
+                (List<T>) mongoOperations.find(query, specification.getTypeClass()),
+                pageable,
+                mongoOperations.count(query, specification.getTypeClass())
+        );
     }
 
 
-    private Query getQuery(MSpecification specification){
+    private Query getQuery(MSpecification specification) {
         return Optional.ofNullable(specification.buildCriteria().execute(MCriteriaBuilder.getInstance()))
-                .map(criteriaBuilder -> criteriaBuilder.getQuery())
+                .map(criteriaBuilder -> criteriaBuilder.buildQuery())
                 .orElse(new Query());
     }
 

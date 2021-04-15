@@ -1,7 +1,6 @@
 package com.danielsolawa.mongoquery;
 
 
-import com.danielsolawa.mongoquery.repository.MSpecificationRepository;
 import com.danielsolawa.mongoquery.repository.MSpecificationRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -20,7 +20,12 @@ public class HumanMongoSpecification extends MSpecification<Human> {
     @Override
     public MCriteria buildCriteria() {
         return cb -> cb
-                .append(Criteria.where("name").in(name));
+                .append(Criteria.where("name").in("Adam"))
+                .append(Criteria.where("dogList.name").in("ramzes"))
+                .or()
+                .append(Criteria.where("name").in("Daniel"))
+                .or()
+                .append(Criteria.where("name").in("Tomek"));
     }
 
     public List<String> getName() {

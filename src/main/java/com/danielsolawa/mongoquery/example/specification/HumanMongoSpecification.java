@@ -24,6 +24,7 @@ public class HumanMongoSpecification extends MSpecification<Human> {
                 .append(Criteria.where("dogList.name").in("ramzes"))
                 .or()
                 .append(Criteria.where("name").in("Daniel"))
+                .append(Criteria.where("dogList.name").in(dogName))
                 .or()
                 .append(Criteria.where("name").in("Tomek"));
     }

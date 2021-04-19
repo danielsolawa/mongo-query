@@ -3,8 +3,6 @@ package com.danielsolawa.mongoquery.specification;
 import com.danielsolawa.mongoquery.filter.MFilter;
 import com.danielsolawa.mongoquery.util.CurrentElement;
 import com.danielsolawa.mongoquery.util.MCriteriaBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.Objects;
 public abstract class MultiMSpecification<T, S extends MFilter> extends MSpecification<T> {
 
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MultiMSpecification.class);
+//    private final static Logger LOGGER = LoggerFactory.getLogger(MultiMSpecification.class);
 
     private List<S> filterList = new ArrayList<>();
 
@@ -34,17 +32,18 @@ public abstract class MultiMSpecification<T, S extends MFilter> extends MSpecifi
     public MCriteriaBuilder append(MCriteriaBuilder cb, CurrentElement<S> currentElement) {
 //        LOGGER.info("[filter list size {}]", filterList.size());
         for (int i = 0; i < filterList.size(); i++) {
-            List<Criteria> criteria = currentElement.apply(getElement(i));
+            List<Criteria> criteriaList = currentElement.apply(getElement(i));
             if (i == 0) {
-                cb = addToCriteria(cb, criteria);
+                cb = addToCriteria(cb, criteriaList);
             } else {
                 cb = cb.or();
-                cb = addToCriteria(cb, criteria);
+                cb = addToCriteria(cb, criteriaList);
             }
         }
 
         return cb;
     }
+
 
     private S getElement(int i) {
         if (Objects.isNull(this.filterList) || i >= this.filterList.size()) {

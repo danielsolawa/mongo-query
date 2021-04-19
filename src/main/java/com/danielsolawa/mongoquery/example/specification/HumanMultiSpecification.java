@@ -4,13 +4,11 @@ import com.danielsolawa.mongoquery.example.filter.HumanFilter;
 import com.danielsolawa.mongoquery.example.model.Human;
 import com.danielsolawa.mongoquery.specification.MultiMSpecification;
 import com.danielsolawa.mongoquery.util.MCriteria;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 public class HumanMultiSpecification extends MultiMSpecification<Human, HumanFilter> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(HumanMultiSpecification.class);
+//    private final static Logger LOGGER = LoggerFactory.getLogger(HumanMultiSpecification.class);
 
     public HumanMultiSpecification() {
         super(Human.class);

@@ -1,7 +1,5 @@
 package com.danielsolawa.mongoquery.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -10,7 +8,7 @@ import java.util.function.Function;
 
 public class MCriteriaBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MCriteriaBuilder.class.getName());
+//    private static final Logger LOGGER = LoggerFactory.getLogger(MCriteriaBuilder.class.getName());
 
     private Query query;
     private final Map<Integer, List<Criteria>> criteriaMap = new HashMap<>();

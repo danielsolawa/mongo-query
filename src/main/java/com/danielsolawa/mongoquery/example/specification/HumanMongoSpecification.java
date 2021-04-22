@@ -9,7 +9,7 @@ import java.util.List;
 
 public class HumanMongoSpecification extends MSpecification<Human> {
 
-    private List<String> name = List.of("Adam", "Daniel");
+    private List<String> name;
     private List<String> dogName = List.of("ramzes", "ace");
 
 
@@ -19,14 +19,7 @@ public class HumanMongoSpecification extends MSpecification<Human> {
 
     @Override
     public MCriteria buildCriteria() {
-        return cb -> cb
-                .append(Criteria.where("name").in("Adam"))
-                .append(Criteria.where("dogList.name").in("ramzes"))
-                .or()
-                .append(Criteria.where("name").in("Daniel"))
-                .append(Criteria.where("dogList.name").in(dogName))
-                .or()
-                .append(Criteria.where("name").in("Tomek"));
+        return cb -> cb.append(Criteria.where("name").in(name));
     }
 
     public List<String> getName() {

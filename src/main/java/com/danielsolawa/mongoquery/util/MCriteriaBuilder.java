@@ -1,5 +1,7 @@
 package com.danielsolawa.mongoquery.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -8,7 +10,7 @@ import java.util.function.Function;
 
 public class MCriteriaBuilder {
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger(MCriteriaBuilder.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MCriteriaBuilder.class.getName());
 
     private Query query;
     private final Map<Integer, List<Criteria>> criteriaMap = new HashMap<>();
@@ -30,6 +32,7 @@ public class MCriteriaBuilder {
 
     public MCriteriaBuilder append(Criteria criteria) {
         if (isFilterNonNull.apply(criteria)) {
+            LOGGER.debug("[append criteria not null]");
             addToCurrentCriteria(criteria);
         }
 
@@ -48,6 +51,12 @@ public class MCriteriaBuilder {
     }
 
     public Query buildQuery() {
+        if (getCurrentCriteria().isEmpty()){
+            LOGGER.debug("Query buildQuery is empty");
+            return new Query();
+        }
+
+
         List<Criteria> criteriaResult = new ArrayList<>();
 
         criteriaMap.entrySet().forEach(entry ->

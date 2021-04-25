@@ -12,3 +12,8 @@
 >@EnableMongoRepositories(
          repositoryBaseClass = MSpecificationRepositoryImpl.class)
 - Create a repository for desired type and extend MSpecificationRepository
+
+
+# License 
+The library is licensed under the Apache License, version 2.0
+https://www.apache.org/licenses/LICENSE-2.0
